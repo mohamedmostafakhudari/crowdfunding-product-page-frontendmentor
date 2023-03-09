@@ -29,6 +29,9 @@ const initialProject = {
         "You get an ergonomic stand made of natural bamboo. You've helped us launch our promotional campaign, and you’ll be added to a special Backer member list",
       left: 101,
       selected: false,
+      minAmount: 25,
+      enteredAmount: 25,
+      error: false,
     },
     {
       name: "Black Edition Stand",
@@ -37,6 +40,9 @@ const initialProject = {
         "You get a Black Special Edition computer stand and a personal thank you. You’ll be added to our Backer member list. Shipping is included",
       left: 64,
       selected: false,
+      minAmount: 75,
+      enteredAmount: 75,
+      error: false,
     },
     {
       name: "Mahogany Special Edition",
@@ -45,6 +51,9 @@ const initialProject = {
         "You get two Special Edition Mahogany stands, a Backer T-Shirt, and a personal thank you. You’ll be added to our Backer member list. Shipping is included",
       left: 0,
       selected: false,
+      minAmount: 200,
+      enteredAmount: 200,
+      error: false,
     },
   ],
 };

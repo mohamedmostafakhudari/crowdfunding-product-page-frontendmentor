@@ -1,5 +1,6 @@
 import React from "react";
-import CustomRadioInput from "./CustomRadioInput";
+import Pledge from "./Pledge";
+import { useState } from "react";
 export default function BackModal({
   showModal,
   setShowModal,
@@ -25,13 +26,59 @@ export default function BackModal({
       rewards: nextRewards,
     });
   }
+  function handlePledgeAmountChange(e) {
+    const nextRewards = project.rewards.map((reward) => {
+      if (reward.selected) {
+        return {
+          ...reward,
+          enteredAmount: e.target.value,
+          error: false,
+        };
+      } else {
+        return {
+          ...reward,
+          error: false,
+        };
+      }
+    });
+    setProject({
+      ...project,
+      rewards: nextRewards,
+    });
+  }
+  function handleSubmit(e) {
+    e.preventDefault();
+    const currentReward = project.rewards.find(
+      (reward) => reward.selected === true
+    );
+    if (currentReward.enteredAmount < currentReward.minAmount) {
+      const nextRewards = project.rewards.map((reward) => {
+        if (reward.name === currentReward.name) {
+          return {
+            ...reward,
+            error: true,
+          };
+        } else {
+          return {
+            ...reward,
+            error: false,
+          };
+        }
+      });
+      setProject({
+        ...project,
+        rewards: nextRewards,
+      });
+      return;
+    }
+  }
   return (
     <div
       className={`absolute inset-0 ${
         showModal && "bg-black/30"
       } grid place-items-center z-10 ${showModal ? "visible" : "invisible"}`}
     >
-      <form className="mx-6 bg-white p-8 rounded-lg">
+      <form onSubmit={handleSubmit} className="mx-6 bg-white p-8 rounded-lg">
         <div>
           <h3 className="text-xl font-bold text-neutralBlack">
             Back this project
@@ -40,29 +87,29 @@ export default function BackModal({
             Want to support us in bringing {project.name} out in the world?
           </p>
         </div>
-        <ul>
+        <ul className="mt-7 space-y-8">
           {project.rewards.map((reward) => {
             if (reward.name == "Pledge with no reward") {
               return (
-                <li key={reward.name}>
-                  <div>
-                    <CustomRadioInput
-                      reward={reward}
-                      selectReward={() => handleSelectReward(reward.name)}
-                    />
-                  </div>
-                </li>
+                <Pledge
+                  key={reward.name}
+                  modalEdition={true}
+                  reward={reward}
+                  onSelect={handleSelectReward}
+                  withNoReward={true}
+                />
               );
             } else {
               return (
-                <li key={reward.name}>
-                  <div>
-                    <CustomRadioInput
-                      reward={reward}
-                      selectReward={() => handleSelectReward(reward.name)}
-                    />
-                  </div>
-                </li>
+                <Pledge
+                  key={reward.name}
+                  modalEdition={true}
+                  reward={reward}
+                  onSelect={handleSelectReward}
+                  onAmountChange={handlePledgeAmountChange}
+                  error={reward.error}
+                  withNoReward={false}
+                />
               );
             }
           })}
