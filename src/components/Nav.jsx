@@ -7,7 +7,7 @@ export default function Nav() {
   const [showMenu, setShowMenu] = useState(false);
   return (
     <nav className="py-10">
-      <div className="container mx-auto flex items-center justify-between px-5 md:px-0">
+      <div className="container mx-auto flex items-center justify-between px-5 md:px-20">
         <div>
           <div className="relative z-10">
             <img src="./assets/images/logo.svg" alt="logo" />

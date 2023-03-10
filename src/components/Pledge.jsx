@@ -14,15 +14,28 @@ export default function Pledge({
         key={reward.name}
         className={`border duration-200 ease-in-out ${
           reward.selected ? "border-primaryColor" : "border-neutralGray/50"
-        } rounded-lg p-8 py-10`}
+        } rounded-lg p-8 py-10 duration-200 ease-in-out`}
       >
         <div>
-          <CustomRadioInput
-            reward={reward}
-            selectReward={() => onSelect(reward.name)}
-          />
+          <div>
+            <CustomRadioInput
+              reward={reward}
+              selectReward={() => onSelect(reward.name)}
+            />
+          </div>
+          <div className="text-neutralGray mt-6">{reward.offer}</div>
         </div>
-        <div className="text-neutralGray mt-6">{reward.offer}</div>
+        <div
+          className={`flex ${
+            reward.selected
+              ? "mt-6 visible opacity-100"
+              : "-mt-12 invisible opacity-0"
+          } duration-200 ease-in-out`}
+        >
+          <button className="flex-1 bg-primaryColor text-white font-medium p-2 rounded-[30px] px-3 duration-200 ease-in-out hover:bg-primaryActive">
+            Continue
+          </button>
+        </div>
       </li>
     );
   }
@@ -30,9 +43,12 @@ export default function Pledge({
     return (
       <li
         key={reward.name}
+        id={reward.name}
         className={`border duration-200 ease-in-out ${
           reward.selected ? "border-primaryColor" : "border-neutralGray/50"
-        } rounded-lg`}
+        } rounded-lg ${
+          reward.left ? "pointer-events-auto" : "pointer-events-none"
+        }`}
       >
         <div className="p-6 py-10">
           <div>
@@ -67,7 +83,9 @@ export default function Pledge({
         </div>
         <div
           className={`duration-200 ease-in-out  ${
-            reward.selected ? "mt-0 visible" : "-mt-36 invisible"
+            reward.selected
+              ? "mt-0 visible opacity-100"
+              : "-mt-36 invisible opacity-0"
           }`}
         >
           <hr />
@@ -79,14 +97,14 @@ export default function Pledge({
               <input
                 type="tel"
                 value={reward.enteredAmount}
-                className="border absolute inset-0 w-full h-full block rounded-[30px] text-center focus:outline-none hover:outline-none"
+                className="border absolute inset-0 w-full h-full block rounded-[30px] text-center focus:outline-none hover:outline-none hover:border-primaryActive/50 focus:border-primaryActive/50"
                 onChange={onAmountChange}
               />
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-neutralGray/50">
                 $
               </span>
             </div>
-            <button className="flex-1 bg-primaryColor text-white font-medium p-2 rounded-[30px] px-3">
+            <button className="flex-1 bg-primaryColor text-white font-medium p-2 rounded-[30px] px-3 duration-200 ease-in-out hover:bg-primaryActive">
               Continue
             </button>
           </div>
@@ -98,5 +116,60 @@ export default function Pledge({
       </li>
     );
   }
-  return <div>Pledge</div>;
+
+  return (
+    <div className="border border-neutralGray/50 rounded-lg p-6">
+      <div className="flex flex-col md:flex-row md:justify-between">
+        <h5
+          className={`text-neutralBlack font-bold ${
+            !reward.left && "text-neutralGray"
+          } md:text-lg`}
+        >
+          {reward.name}
+        </h5>
+        <span
+          className={`${
+            reward.left ? "text-primaryColor" : "text-neutralGray/50"
+          }`}
+        >
+          {reward.desc}
+        </span>
+      </div>
+      <p
+        className={`mt-8 ${
+          reward.left ? "text-neutralGray" : "text-neutralGray/50"
+        }`}
+      >
+        {reward.offer}
+      </p>
+      <div className="flex flex-col md:flex-row md:justify-between">
+        <p className="mt-8 flex items-center gap-2">
+          <span
+            className={`${
+              reward.left ? "text-black" : "text-neutralGray"
+            } text-4xl font-bold`}
+          >
+            {reward.left}
+          </span>
+          <span
+            className={`${
+              reward.left ? "text-neutralGray" : "text-neutralGray/50"
+            }`}
+          >
+            left
+          </span>
+        </p>
+        <button
+          className={`text-white p-3 px-8 rounded-[30px] font-bold mt-8 duration-200 ease-in-out ${
+            reward.left ? "bg-primaryColor" : "bg-neutralGray/50"
+          } ${
+            reward.left ? "pointer-events-auto" : "pointer-events-none"
+          } hover:bg-primaryActive`}
+          onClick={onSelect}
+        >
+          {reward.left ? "Select Reward" : "Out of Stock"}
+        </button>
+      </div>
+    </div>
+  );
 }

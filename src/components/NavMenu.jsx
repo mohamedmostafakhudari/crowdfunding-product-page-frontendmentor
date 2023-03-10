@@ -2,7 +2,11 @@ import React from "react";
 import NavItem from "./NavItem";
 export default function NavMenu({ items, showMenu }) {
   return (
-    <div className={`absolute ${showMenu && "bg-black/30"} inset-0`}>
+    <div
+      className={`absolute ${showMenu && "bg-black/30"} inset-0 ${
+        !showMenu && "pointer-events-none"
+      }`}
+    >
       <div
         className={`absolute left-6 right-6 bg-white duration-200 ease-in-out p-6 rounded-lg ${
           showMenu

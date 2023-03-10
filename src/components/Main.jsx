@@ -59,10 +59,26 @@ const initialProject = {
 };
 export default function Main() {
   const [project, setProject] = useState(initialProject);
+  const [showBackModal, setShowBackModal] = useState(false);
+  const [showThankYouModal, setShowThankYouModal] = useState(false);
   return (
-    <main className="border border-black">
-      <div className="container mx-auto px-6">
-        <Project project={project} setProject={setProject} />
+    <main className="">
+      <div className="container mx-auto px-6 space-y-6">
+        <Project
+          project={project}
+          setProject={setProject}
+          showBackModal={showBackModal}
+          setShowBackModal={setShowBackModal}
+          showThankYouModal={showThankYouModal}
+          setShowThankYouModal={setShowThankYouModal}
+        />
+        <Stats project={project} />
+        <About
+          project={project}
+          showBackModal={showBackModal}
+          setProject={setProject}
+          setShowBackModal={setShowBackModal}
+        />
       </div>
     </main>
   );

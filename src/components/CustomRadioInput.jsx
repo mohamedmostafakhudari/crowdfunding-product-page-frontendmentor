@@ -7,7 +7,7 @@ export default function CustomRadioInput({ reward, selectReward }) {
         <>
           <label
             htmlFor={reward.name}
-            className="font-bold grid gap-[0.5em]"
+            className="font-bold grid gap-[0.5em] duration-200 ease-in-out cursor-pointer hover:text-primaryColor"
             style={{ gridTemplateColumns: "2.125em auto" }}
           >
             <div className="w-fit rounded-full relative grid place-content-center -translate-y-[0.075em]">
@@ -64,18 +64,18 @@ export default function CustomRadioInput({ reward, selectReward }) {
                 ></div>
               </div>
             </div>
-            <div className="space-y-1">
+            <div className={`space-y-1 ${reward.left && "group"}`}>
               <div
                 className={`${
                   reward.left ? "text-neutralBlack" : "text-neutralGray"
-                }`}
+                } duration-200 ease-in-out cursor-pointer group-hover:text-primaryColor`}
               >
                 {reward.name}
               </div>
               <div
                 className={`text-sm font-light ${
                   reward.left ? "text-primaryColor" : "text-neutralGray/50"
-                }`}
+                } duration-200 ease-in-out cursor-pointer group-hover:text-primaryColor`}
               >
                 {reward.desc}
               </div>
