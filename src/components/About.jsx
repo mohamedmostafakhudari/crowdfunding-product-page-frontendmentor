@@ -35,6 +35,7 @@ export default function About({
       const currentReward = project.rewards.find(
         (reward) => reward.selected === true
       );
+      if (!currentReward) return;
       const pledgeNodes = modal.querySelectorAll("li");
       pledgeNodes.forEach((node) => {
         if (node.id === currentReward.name) {
